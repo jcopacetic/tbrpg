@@ -23,8 +23,7 @@ class Player:
         if isinstance(move, dict):
             # Convert the dictionary to a Move object
             move = Move(move)
-        
-        print(move.attack)
+
         damage = move.attack if move else player.attack
 
         variable_damage = int(damage * random.uniform(damage_calc["min_percent"], damage_calc["max_percent"]))

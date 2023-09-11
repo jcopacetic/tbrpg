@@ -1,9 +1,17 @@
 from player import Player, Baddy 
 from game import Game 
+from utils import slow_type
 
 def main():
     
     player = Player()
+
+    slow_type("""
+Welcome to Turn Based BATTLE RPG
+    
+You look great today!
+    
+Let's get started, check out the available commands:     """)
 
     commands = """
     
@@ -15,9 +23,6 @@ def main():
                                     
     """
 
-    
-    print(player.moves)
-
     print(commands)
 
     while True:
@@ -28,10 +33,12 @@ def main():
             current_game = Game()
             baddy = Baddy()
 
+            slow_type("""
+            Time to FIGHT!
+""")
+
             print(f"""
 
-            Time To FIGHT!
-        
             {baddy.name} ({baddy.type.name})
             hp: {baddy.health} - atk: {baddy.attack}
 
@@ -50,8 +57,7 @@ def main():
                     break
                 current_game.take_turn(baddy, player)
                 print(f"{player.name}'s health = {player.health}\n")
-            
-            print("turtles")
+
 
         elif user_input == "player":
             print(f"""
@@ -65,7 +71,7 @@ def main():
            
             for move in player.moves:
                 move_info = f"Name: {move.name}, Type: {move.type.name}, Attack: {move.attack}, PP: {move.pp_now}/{move.pp}"
-                print(move_info)
+                print(f"Moves\n{move_info}")
                     
         elif user_input == "commands":
             print(commands)
