@@ -7,6 +7,7 @@ MOVES = [
         "type": Types.normal,
         "attack": 10,
         "pp": 30,
+        "pp_now": 30
     },
     {
         "id": 2,
@@ -14,6 +15,7 @@ MOVES = [
         "type": Types.normal,
         "attack": 15,
         "pp": 20,
+        "pp_now": 20
     },
     {
         "id": 3,
@@ -21,6 +23,7 @@ MOVES = [
         "type": Types.normal,
         "attack": 20,
         "pp": 5,
+        "pp_now": 5
     },
     {
         "id": 4,
@@ -28,6 +31,7 @@ MOVES = [
         "type": Types.normal,
         "attack": 20,
         "pp": 5,
+        "pp_now": 5
     },
     {
         "id": 5,
@@ -35,6 +39,7 @@ MOVES = [
         "type": Types.normal,
         "attack": 30,
         "pp": 1,
+        "pp_now": 1
     }
 
 ]

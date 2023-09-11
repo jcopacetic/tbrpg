@@ -35,12 +35,12 @@ class Game:
             user_input = input("Attack or Run:   ")
         
         if user_input == "attack":
-            moves = [f"[ {index + 1} ] {move['name']} atk: {move['attack']} pp: {move['pp']}" for index, move in enumerate(player.moves)]
+            moves = [f"[ {index + 1} ] {move['name']} atk: {move['attack']} pp: {move['pp_now']}/{move['pp']}" for index, move in enumerate(player.moves)]
             moves = "\n".join(moves)
 
 
             if isinstance(player, Baddy):
-                available_moves = [move for move in player.moves if move["pp"] > 0]
+                available_moves = [move for move in player.moves if move["pp_now"] > 0]
 
                 if available_moves:
                     move = random.choice(available_moves)
@@ -52,11 +52,22 @@ class Game:
 
                 while not move:
                     user_input = input(f"\nchoose your attack: \n{moves}\n")
-                    move = player.moves[int(user_input) - 1]
-                    if move["pp"] > 0:
-                        break
-                    print("\nthat move is out of pp, try another\n")
-                    move = None
+
+                    try:
+                        user_input = int(user_input)
+                        if 1 <= user_input <= len(player.moves):
+                            move = player.moves[user_input - 1]
+                            if move["pp_now"] > 0:
+                                break
+                            print("\nThat move is out of PP, try another.\n")
+                            move = None
+                        else:
+                            print("\nEnter a number that corresponds to a move!")
+                    except ValueError:
+                        print("\nEnter a valid number for your move!")
+                        move = None
+
+                        
                 
 
             opponent.take_damage(player, move)

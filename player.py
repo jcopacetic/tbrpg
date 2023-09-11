@@ -27,8 +27,8 @@ class Player:
             self.health -= variable_damage
 
         if move:
-            move["pp"] -= 1
-            message = f"{player.name} attacks {self.name} with {move['name']} for {variable_damage}"
+            move["pp_now"] -= 1
+            message = f"\n{player.name} attacks {self.name} with {move['name']} for {variable_damage}"
         else: 
             message = f"{player.name} attacks {self.name} for {variable_damage}"
         
@@ -63,6 +63,9 @@ class Player:
 
     def heal(self):
         self.health = self.total_health
+        for move in self.moves:
+            move["pp_now"] = move["pp"]
+        
 
 class Baddy(Player):
      def __init__(self):
