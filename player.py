@@ -1,5 +1,5 @@
 import random 
-from data.moves import MOVES
+from data.moves import MOVES, Move
 from utils import Types, type_damage
 
 class Player:
@@ -11,13 +11,21 @@ class Player:
         self.attack = 12
         self.exp = 0
         self.level = 1
+        self.moves = []
         random.shuffle(MOVES)
-        self.moves = MOVES[:4]
+        moves = MOVES[:4]
+        for move in moves:
+            self.moves.append(Move(move))
 
-    def take_damage(self, player, current_game, move=None):
+    def take_damage(self, player, current_game, move):
         damage_calc = type_damage(self.type.name, player.type.name)
 
-        damage = move["attack"] if move else player.attack
+        if isinstance(move, dict):
+            # Convert the dictionary to a Move object
+            move = Move(move)
+        
+        print(move.attack)
+        damage = move.attack if move else player.attack
 
         variable_damage = int(damage * random.uniform(damage_calc["min_percent"], damage_calc["max_percent"]))
 
@@ -31,8 +39,8 @@ class Player:
             self.health -= variable_damage
 
         if move:
-            move["pp_now"] -= 1
-            message = f"\n{player.name} attacks {self.name} with {move['name']} for {variable_damage}"
+            move.pp_now -= 1
+            message = f"\n{player.name} attacks {self.name} with {move.name} for {variable_damage}"
         else: 
             message = f"{player.name} attacks {self.name} for {variable_damage}"
         
@@ -68,7 +76,7 @@ class Player:
     def heal(self):
         self.health = self.total_health
         for move in self.moves:
-            move["pp_now"] = move["pp"]
+            move.pp_now = move.pp
         
 
 class Baddy(Player):

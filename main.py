@@ -15,6 +15,9 @@ def main():
                                     
     """
 
+    
+    print(player.moves)
+
     print(commands)
 
     while True:
@@ -61,7 +64,7 @@ def main():
 """)
            
             for move in player.moves:
-                move_info = f"Name: {move['name']}, Type: {move['type'].name}, Attack: {move['attack']}, PP: {move['pp_now']}/{move['pp']}"
+                move_info = f"Name: {move.name}, Type: {move.type.name}, Attack: {move.attack}, PP: {move.pp_now}/{move.pp}"
                 print(move_info)
                     
         elif user_input == "commands":

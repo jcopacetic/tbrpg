@@ -43,3 +43,11 @@ MOVES = [
     }
 
 ]
+
+class Move:
+    def __init__(self, move):
+        self.name = move["name"]
+        self.type = move["type"]
+        self.attack = move["attack"]
+        self.pp = move["pp"]
+        self.pp_now = move["pp_now"]

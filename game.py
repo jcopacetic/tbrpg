@@ -32,19 +32,20 @@ class Game:
             user_input = input("Attack or Run:   ")
         
         if user_input == "attack":
-            moves = [f"[ {index + 1} ] {move['name']} atk: {move['attack']} pp: {move['pp_now']}/{move['pp']}" for index, move in enumerate(player.moves)]
-            moves = "\n".join(moves)
-
+            
 
             if isinstance(player, Baddy):
                 available_moves = [move for move in player.moves if move["pp_now"] > 0]
 
                 if available_moves:
-                    move = random.choice(available_moves)
+                    move = random.choice(player.moves)
                 else:
                     print("Enemy has no moves with PP > 0 available.")
 
             else:
+                moves = [f"[ {index + 1} ] {move.name} atk: {move.attack} pp: {move.pp_now}/{move.pp}" for index, move in enumerate(player.moves)]
+                moves = "\n".join(moves)
+                
                 move = None 
 
                 while not move:
@@ -54,7 +55,7 @@ class Game:
                         user_input = int(user_input)
                         if 1 <= user_input <= len(player.moves):
                             move = player.moves[user_input - 1]
-                            if move["pp_now"] > 0:
+                            if move.pp_now > 0:
                                 break
                             print("\nThat move is out of PP, try another.\n")
                             move = None
