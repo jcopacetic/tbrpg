@@ -52,6 +52,8 @@ Let's get started, check out the available commands:     """)
                 current_game.new_round()
                 current_game.take_turn(player, baddy)
                 print(f"{baddy.name}'s health = {baddy.health}\n")
+                
+                print("here")
                 if not current_game.check(player, baddy):
                     player.heal()
                     break

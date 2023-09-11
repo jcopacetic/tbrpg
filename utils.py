@@ -4,7 +4,7 @@ from enum import Enum
 Types = Enum("Types", "normal, fire, water, ground, electricity")
 
 
-typing_speed = 100 #wpm
+typing_speed = 300 #wpm
 def slow_type(t):
     for l in t:
         sys.stdout.write(l)

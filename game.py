@@ -26,52 +26,58 @@ class Game:
         return True 
     
     def take_turn(self, player, opponent):
-        if isinstance(player, Baddy):
-            user_input = "attack"
-        else: 
-            user_input = input("Attack or Run:   ")
+        options = ["attack", "run"]
         
-        if user_input == "attack":
-            
-
+        user_input = ""
+        while user_input not in options:
+            print(user_input)
             if isinstance(player, Baddy):
-                available_moves = [move for move in player.moves if move["pp_now"] > 0]
-
-                if available_moves:
-                    move = random.choice(player.moves)
-                else:
-                    print("Enemy has no moves with PP > 0 available.")
-
-            else:
-                moves = [f"[ {index + 1} ] {move.name} atk: {move.attack} pp: {move.pp_now}/{move.pp}" for index, move in enumerate(player.moves)]
-                moves = "\n".join(moves)
+                user_input = "attack"
+            else: 
+                user_input = input("Attack or Run:   ")
+        
+            if user_input == "attack":
                 
-                move = None 
 
-                while not move:
-                    user_input = input(f"\nchoose your attack: \n{moves}\n")
+                if isinstance(player, Baddy):
+                    available_moves = [move for move in player.moves if move["pp_now"] > 0]
 
-                    try:
-                        user_input = int(user_input)
-                        if 1 <= user_input <= len(player.moves):
-                            move = player.moves[user_input - 1]
-                            if move.pp_now > 0:
-                                break
-                            print("\nThat move is out of PP, try another.\n")
+                    if available_moves:
+                        move = random.choice(player.moves)
+                    else:
+                        print("Enemy has no moves with PP > 0 available.")
+
+                else:
+                    moves = [f"[ {index + 1} ] {move.name} atk: {move.attack} pp: {move.pp_now}/{move.pp}" for index, move in enumerate(player.moves)]
+                    moves = "\n".join(moves)
+                    
+                    move = None 
+
+                    while not move:
+                        user_input = input(f"\nchoose your attack: \n{moves}\n")
+
+                        try:
+                            user_input = int(user_input)
+                            if 1 <= user_input <= len(player.moves):
+                                move = player.moves[user_input - 1]
+                                if move.pp_now > 0:
+                                    break
+                                print("\nThat move is out of PP, try another.\n")
+                                move = None
+                            else:
+                                print("\nEnter a number that corresponds to a move!")
+                        except ValueError:
+                            print("\nEnter a valid number for your move!")
                             move = None
-                        else:
-                            print("\nEnter a number that corresponds to a move!")
-                    except ValueError:
-                        print("\nEnter a valid number for your move!")
-                        move = None
-   
+    
 
-            opponent.take_damage(player, self, move)
-            
-        elif user_input == "run":
-            self.try_to_escape(player, opponent)
-        else: 
-            print("Invalid command. Try again.")
+                opponent.take_damage(player, self, move)
+                break
+                    
+            elif user_input == "run":
+                self.try_to_escape(player, opponent)
+            else: 
+                print("Invalid command. Try again.")
 
     def try_to_escape(self, player, opponent):
         escape_change = 0.3
