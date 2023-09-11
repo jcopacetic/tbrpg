@@ -6,7 +6,7 @@ class Player:
     def __init__(self):
         self.name = "player 1"
         self.type = random.choice(list(Types))
-        self.health = 100
+        self.health = 60
         self.total_health = 100
         self.attack = 12
         self.exp = 0
@@ -14,7 +14,7 @@ class Player:
         random.shuffle(MOVES)
         self.moves = MOVES[:4]
 
-    def take_damage(self, player, move=None):
+    def take_damage(self, player, current_game, move=None):
         damage_calc = type_damage(self.type.name, player.type.name)
 
         damage = move["attack"] if move else player.attack
@@ -23,6 +23,10 @@ class Player:
 
         if variable_damage > self.health:
             self.health = 0
+            if isinstance(self, Baddy):
+                current_game.check(player, self)
+            else: 
+                current_game.check(self, player)
         else:
             self.health -= variable_damage
 
@@ -71,7 +75,7 @@ class Baddy(Player):
      def __init__(self):
         self.name = "bad guy"
         self.type = random.choice(list(Types))
-        self.health = 150
+        self.health = 70
         self.attack = 9
         random.shuffle(MOVES)
         self.moves = MOVES[:4]

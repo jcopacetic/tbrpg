@@ -11,20 +11,17 @@ class Game:
         print(f"\n Round {self.round} \n")
 
     def check(self, player, opponent):
-        if player.health < 1 and opponent.health > 0:
-            player.gain_exp(4)
+        if player.health < 1 or opponent.health < 1:
             self.game_over = True 
-            print("\nGame Over! You lose.\n")
-            return False
-        elif opponent.health < 1 and player.health > 0:
-            player.gain_exp(12)
-            self.game_over = True 
-            print("\nGame Over! You Win!\n")
-            return False
-        elif player.health < 1 and opponent.health < 1:
-            player.gain_exp(6)
-            self.game_over = True 
-            print("\ngame Over! Draw!\n")
+            if player.health < 1 and opponent.health > 0:
+                player.gain_exp(4)
+                print("\nGame Over! You lose.\n")
+            elif opponent.health < 1 and player.health > 0:
+                player.gain_exp(12)
+                print("\nGame Over! You Win!\n")
+            elif player.health < 1 and opponent.health < 1:
+                player.gain_exp(6)
+                print("\ngame Over! Draw!\n")
             return False
         return True 
     
@@ -66,11 +63,9 @@ class Game:
                     except ValueError:
                         print("\nEnter a valid number for your move!")
                         move = None
+   
 
-                        
-                
-
-            opponent.take_damage(player, move)
+            opponent.take_damage(player, self, move)
             
         elif user_input == "run":
             self.try_to_escape(player, opponent)
